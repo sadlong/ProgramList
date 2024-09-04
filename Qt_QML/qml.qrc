@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>GreenMenuBar.qml</file>
+        <file>GreenMenuBarBg.qml</file>
+        <file>GreenMenuItem.qml</file>
+    </qresource>
+</RCC>
