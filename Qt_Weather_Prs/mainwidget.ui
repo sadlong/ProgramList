@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWidget</class>
+ <widget class="QWidget" name="MainWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>810</width>
+    <height>604</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Qt_天气预报（测试）</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="images.qrc">
+    <normaloff>:/new/prefix1/images/3.jpg</normaloff>:/new/prefix1/images/3.jpg</iconset>
+  </property>
+  <widget class="QCalendarWidget" name="calendarWidget">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>40</y>
+     <width>301</width>
+     <height>261</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_city">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>40</y>
+     <width>161</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_GetData">
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>40</y>
+     <width>151</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>获取天气指数</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidget_City">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>80</y>
+     <width>351</width>
+     <height>121</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>210</y>
+     <width>101</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>标准时间：</string>
+   </property>
+  </widget>
+  <widget class="QLCDNumber" name="lcdNumber_Time">
+   <property name="geometry">
+    <rect>
+     <x>453</x>
+     <y>222</y>
+     <width>261</width>
+     <height>71</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>0</y>
+     <width>751</width>
+     <height>321</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidget_Word1">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>361</y>
+     <width>201</width>
+     <height>161</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidget_Word2">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>360</y>
+     <width>201</width>
+     <height>161</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidget_Word3">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>360</y>
+     <width>201</width>
+     <height>161</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>340</y>
+     <width>221</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>今天天气</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_3">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>340</y>
+     <width>221</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>明天天气</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_4">
+   <property name="geometry">
+    <rect>
+     <x>540</x>
+     <y>340</y>
+     <width>221</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>后天天气</string>
+   </property>
+  </widget>
+  <zorder>groupBox_4</zorder>
+  <zorder>groupBox_3</zorder>
+  <zorder>groupBox_2</zorder>
+  <zorder>groupBox</zorder>
+  <zorder>calendarWidget</zorder>
+  <zorder>comboBox_city</zorder>
+  <zorder>pushButton_GetData</zorder>
+  <zorder>listWidget_City</zorder>
+  <zorder>label</zorder>
+  <zorder>lcdNumber_Time</zorder>
+  <zorder>listWidget_Word1</zorder>
+  <zorder>listWidget_Word2</zorder>
+  <zorder>listWidget_Word3</zorder>
+ </widget>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
+ <connections/>
+</ui>
