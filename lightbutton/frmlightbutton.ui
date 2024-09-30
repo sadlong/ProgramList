@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>frmLightButton</class>
+ <widget class="QWidget" name="frmLightButton">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>frmLightButton</string>
+  </property>
+  <widget class="LightButton" name="lightButton1" native="true">
+   <property name="geometry">
+    <rect>
+     <x>11</x>
+     <y>11</y>
+     <width>255</width>
+     <height>578</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="LightButton" name="lightButton2" native="true">
+   <property name="geometry">
+    <rect>
+     <x>273</x>
+     <y>11</y>
+     <width>254</width>
+     <height>578</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="LightButton" name="lightButton3" native="true">
+   <property name="geometry">
+    <rect>
+     <x>534</x>
+     <y>11</y>
+     <width>255</width>
+     <height>578</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>LightButton</class>
+   <extends>QWidget</extends>
+   <header location="global">lightbutton.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
