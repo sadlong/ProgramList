@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/cha.png</file>
+        <file>images/QQ.jpg</file>
+        <file>images/shezhi.png</file>
+        <file>images2/cha.svg</file>
+        <file>images2/QQ.svg</file>
+        <file>images2/shezhi.svg</file>
+    </qresource>
+</RCC>
