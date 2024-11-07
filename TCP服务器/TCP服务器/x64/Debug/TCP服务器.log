@@ -1,0 +1,4 @@
+﻿  main.c
+D:\school\visual studio\c++\cpp_again\TCP服务器\TCP服务器\main.c(97,32): warning C4267: “函数”: 从“size_t”转换到“int”，可能丢失数据
+D:\school\visual studio\c++\cpp_again\TCP服务器\TCP服务器\main.c(46,26): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  TCP服务器.vcxproj -> D:\school\visual studio\c++\cpp_again\TCP服务器\x64\Debug\TCP服务器.exe
