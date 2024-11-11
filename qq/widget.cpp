@@ -14,12 +14,12 @@ Widget::Widget(QWidget *parent,QString name) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    this->myname=name;
+    this->myname=name;  //name是登录的用户名
+    //qDebug() << myname;
     port=9999;
     udpSocket=new QUdpSocket(this);
     //允许其他服务器连接相同端口和地址|重新连接服务器
     udpSocket->bind(port,QUdpSocket::ShareAddress|QUdpSocket::ReuseAddressHint);
-
 
     //发送按钮
     connect(ui->sendBtn,&QPushButton::clicked,this,[=](){
