@@ -77,3 +77,150 @@ for(int i=0;i<9;i++){
 ```
 
 主要是信号与槽的应用，监控了按钮的点击事件和聊天框的关闭事件，点开的时候isShow[i]变为true，关闭的时候变为false，这里用循环的目的是动态管理多个聊天框
+
+
+
+### widget.cpp
+
+- `udpSocket->bind(port,QUdpSocket::ShareAddress|QUdpSocket::ReuseAddressHint);` 主要作用是将 `udpSocket` 绑定到指定端口，并通过设置 `ShareAddress` 和 `ReuseAddressHint` 选项，实现地址共享和端口重用功能 
+
+
+
+**sendMsg**
+
+```cpp
+void Widget::sendMsg(Widget::msgType type)
+{
+    //用于存储字节数组的类
+    QByteArray array;
+    //将数据转化成字节流
+    QDataStream stream(&array,QIODevice::WriteOnly);    //与array关联 只写
+    //将数据类型和姓名存入到数据流中
+    stream << type << this->getName();	//符号记住是左移符号
+    //判断是哪种消息类型
+    switch (type)
+    {
+    case Msg:
+        //如果输入框的内容为空 那么就会弹出警告
+        if(ui->msgTxtEdit->toPlainText()=="")
+        {
+            QMessageBox::warning(this,"警告","发送的聊天内容不能为空!");
+            return;
+        }
+        //有输入内容 将输入的内容读入到数据流中
+        stream << this->getMsg();
+        break;
+    case UserEnter:
+        break;
+    case UserLeft:
+        break;
+    }
+    //书写报文
+    //qDebug() << array; 输出的是个乱七八糟的东西 我咋debug。。。
+    udpSocket->writeDatagram(array.data(),array.size(),QHostAddress::Broadcast,this->port); //指定端口 广播
+}
+```
+
+感觉这一段可以当作是udp通信发送信息的模板了：先定义字节数组类，然后定义一个数据流将这个字节数组类关联起来，然后通过流来读入数据，switch语句就是用来判断消息类型的，消息类型在.h文件中声明成了枚举类。最后书写报文，调用udp的接口`writeDatagram`，四个参数也很好理解，分别是数据、数据大小、通讯方式、端口号。
+
+
+
+**receiveMessage**
+
+```cpp
+void Widget::receiveMessage()
+{
+    qint64 size=udpSocket->pendingDatagramSize();
+    //int mysize= static_cast<int>(size);
+    QByteArray array=QByteArray(size,0);
+    udpSocket->readDatagram(array.data(),size);
+    QDataStream stream(&array,QIODevice::ReadOnly); //与array关联 只读
+    int mytype;
+    QString name,msg;//用户名 聊天内容
+    //获取当前的时间 格式设置为：yyyy-mm-dd hh:mm:ss
+    QString time=QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+    stream >> mytype;
+    switch (mytype) {
+    case Msg:
+        stream >> name >> msg;
+        ui->msgBrowser->setTextColor(QColor(Qt::blue));
+        ui->msgBrowser->append("["+name+"]"+time);
+        ui->msgBrowser->append(msg);
+        break;
+    case UserLeft:
+        stream >> name;
+        userLeft(name,time);
+        break;
+    case UserEnter:
+        stream >> name;
+        userEnter(name);
+        break;
+    }
+}
+```
+
+本质上和sendMsg是逆过程，这里主要是接收数据报并拆开数据报变成数据的过程。
+
+
+
+**聊天框的八个功能**
+
+```cpp
+//字体大小
+void (QComboBox:: *sizeBtn)(const QString &text)=&QComboBox::currentTextChanged;
+connect(ui->sizeCbx,sizeBtn,this,[=](const QString &text){
+    ui->msgTxtEdit->setFontPointSize(text.toDouble());
+    ui->msgTxtEdit->setFocus();
+});
+
+//加粗
+connect(ui->boldBtn,&QToolButton::clicked,this,[=](bool checked){
+    //是否按下
+    if(checked){
+        ui->msgTxtEdit->setFontWeight(QFont::Bold);
+    }else{
+        ui->msgTxtEdit->setFontWeight(QFont::Normal);
+    }
+});
+
+//倾斜
+connect(ui->italicTbtn,&QToolButton::clicked,this,[=](bool checked){
+    ui->msgTxtEdit->setFontItalic(checked);
+    ui->msgTxtEdit->setFocus();
+});
+
+//下划线
+connect(ui->underlineTbtn,&QToolButton::clicked,this,[=](bool checked){
+    ui->msgTxtEdit->setFontUnderline(checked);
+    ui->msgTxtEdit->setFocus();
+});
+
+//清空
+connect(ui->clearTbtn,&QToolButton::clicked,this,[=](){
+    ui->msgBrowser->clear();
+});
+
+//字体颜色
+connect(ui->colorTbtn,&QToolButton::clicked,this,[=](){
+    QColor color=QColorDialog::getColor(color,this);
+    ui->msgTxtEdit->setTextColor(color);
+});
+
+//保存聊天记录
+connect(ui->saveTbtn,&QToolButton::clicked,this,[=](){
+    if(ui->msgBrowser->toPlainText().isEmpty()){
+        QMessageBox::warning(this,"警告","保存内容不能为空");
+        return;
+    }
+    //获取保存文件绝对路径/文件名(窗口标题,文件名,类型)
+    QString fileName=QFileDialog::getSaveFileName(this,"保存聊天记录","聊天记录","(*.txt)");
+    if(!fileName.isEmpty()){
+        QFile file(fileName);
+        file.open(QIODevice::WriteOnly|QFile::Text);
+        QTextStream stream(&file);
+        stream<<ui->msgBrowser->toPlainText();
+        file.close();
+    }
+});
+```
+

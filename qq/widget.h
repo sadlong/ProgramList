@@ -33,7 +33,7 @@ signals:
 private:
     Ui::Widget *ui;
     QString myname;
-    quint16 port;//湍口
+    quint16 port;//端口
     QUdpSocket *udpSocket;//udp套接字
 };
 

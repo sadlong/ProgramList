@@ -129,7 +129,14 @@
       </widget>
      </item>
      <item row="0" column="0">
-      <widget class="QFontComboBox" name="fontCbx"/>
+      <widget class="QFontComboBox" name="fontCbx">
+       <property name="currentFont">
+        <font>
+         <family>宋体</family>
+         <pointsize>5</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="0" column="7">
       <widget class="QToolButton" name="clearTbtn">
@@ -209,10 +216,6 @@
      </item>
     </layout>
    </widget>
-   <zorder>widget</zorder>
-   <zorder>frame_2</zorder>
-   <zorder>widget</zorder>
-   <zorder>frame_2</zorder>
   </widget>
   <widget class="QWidget" name="widget_3" native="true">
    <property name="geometry">
@@ -286,7 +289,7 @@
     <item row="0" column="3">
      <widget class="QLabel" name="userNumLbl">
       <property name="text">
-       <string>在线人数:0人</string>
+       <string>在线人数:0</string>
       </property>
      </widget>
     </item>

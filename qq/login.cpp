@@ -38,12 +38,13 @@ Login::Login(QWidget *parent) :
     }
 
     for(int i=0;i<9;i++){
-        connect(vector[i],&QToolButton::clicked,[=](){
+        connect(vector[i],&QToolButton::clicked, this, [=](){
             if(true==isShow[i]){
                 QMessageBox::warning(this,"警告","该聊天框已被打开");
                 return;
             }
             isShow[i]=true;
+            //打开对应用户的聊天窗口
             Widget *widget=new Widget(0,vector[i]->text());
             widget->setWindowIcon(vector[i]->icon());
             widget->setWindowTitle(vector[i]->text());
