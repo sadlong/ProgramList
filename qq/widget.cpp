@@ -45,7 +45,7 @@ Widget::Widget(QWidget *parent,QString name) :
     void (QComboBox:: *sizeBtn)(const QString &text)=&QComboBox::currentTextChanged;
     connect(ui->sizeCbx,sizeBtn,this,[=](const QString &text){
        ui->msgTxtEdit->setFontPointSize(text.toDouble());
-        ui->msgTxtEdit->setFocus();
+       ui->msgTxtEdit->setFocus();
     });
 
     //加粗
@@ -145,7 +145,9 @@ QString Widget::getName()
 
 QString Widget::getMsg()
 {
-    QString msg=ui->msgTxtEdit->toHtml();
+    //最开始的代码是这样的 它获取的文本是html格式 以至于我在接收数据的时候想"["+name+"]："+msg输出会报格式错误
+    //QString msg=ui->msgTxtEdit->toHtml();
+    QString msg=ui->msgTxtEdit->toPlainText();
     ui->msgTxtEdit->clear();
     ui->msgTxtEdit->setFocus();
     return msg;
@@ -153,27 +155,35 @@ QString Widget::getMsg()
 
 void Widget::userEnter(QString username)
 {
+    //首先检查用户列表中是否已经存在该用户 如果不存在 才插入进去
     bool IsEmpty=ui->tableWidget->findItems(username,Qt::MatchExactly).isEmpty();
        if(IsEmpty)
        {
            QTableWidgetItem *table=new QTableWidgetItem(username);
+           //旧用户的视角：头插 新用户的视角：追加
            ui->tableWidget->insertRow(0);
            ui->tableWidget->setItem(0,0,table);
+           //设置颜色
            ui->msgBrowser->setTextColor(QColor(Qt::gray));
            ui->msgBrowser->append(username+"已上线");
+           //更改在线人数条目
            ui->userNumLbl->setText(QString("在线人数:%1").arg(ui->tableWidget->rowCount()));
+           //调用sendMsg 更新其它客户端的状态
            sendMsg(UserEnter);
        }
 }
 
 void Widget::userLeft(QString username, QString time)
 {
+    //还是先判空 存在才能删除列表
     bool isEmpty=ui->tableWidget->findItems(username,Qt::MatchExactly).isEmpty();
     if(!isEmpty){
+        //找到是第几行 并删除
         int row=ui->tableWidget->findItems(username,Qt::MatchExactly).first()->row();
         ui->tableWidget->removeRow(row);
         ui->msgBrowser->append(username+"用户于"+time+"离开");
         ui->userNumLbl->setText(QString("在线人数:%1").arg(ui->tableWidget->rowCount()));
+        //sendMsg(UserLeft);    不能有这一行
     }
 }
 
@@ -192,9 +202,9 @@ void Widget::receiveMessage()
     switch (mytype) {
     case Msg:
         stream >> name >> msg;
-        ui->msgBrowser->setTextColor(QColor(Qt::blue)); //确定输出字体颜色
-        ui->msgBrowser->append("["+name+"]"+time);  //确定输出样式
-        ui->msgBrowser->append(msg);
+        ui->msgBrowser->setTextColor(QColor(Qt::black)); //确定输出字体颜色
+        ui->msgBrowser->append(time);  //确定输出样式
+        ui->msgBrowser->append("["+name+"]："+msg);
         break;
     case UserLeft:
         stream >> name;

@@ -224,3 +224,68 @@ connect(ui->saveTbtn,&QToolButton::clicked,this,[=](){
 });
 ```
 
+
+
+**getMsg**
+
+```cpp
+QString Widget::getMsg()
+{
+    //最开始的代码是这样的 它获取的文本是html格式 以至于我在接收数据的时候想"["+name+"]："+msg输出会报格式错误
+    //QString msg=ui->msgTxtEdit->toHtml();  
+    QString msg=ui->msgTxtEdit->toPlainText();
+    ui->msgTxtEdit->clear();
+    ui->msgTxtEdit->setFocus();
+    return msg;
+}
+```
+
+昨天在测试receiveMessage函数的时候发现改变输出样式会报错，原来就是因为在获取数据的时候msg的格式是html的格式，所以会报格式错误，如果想获取纯文本用QString来接收的话就是用`toPlainText`函数
+
+
+
+**userEnter**
+
+```cpp
+void Widget::userEnter(QString username)
+{
+    //首先检查用户列表中是否已经存在该用户 如果不存在 才插入进去
+    bool IsEmpty=ui->tableWidget->findItems(username,Qt::MatchExactly).isEmpty();
+       if(IsEmpty)
+       {
+           QTableWidgetItem *table=new QTableWidgetItem(username);
+           //旧用户的视角：头插 新用户的视角：追加
+           ui->tableWidget->insertRow(0);
+           ui->tableWidget->setItem(0,0,table);
+           //设置颜色
+           ui->msgBrowser->setTextColor(QColor(Qt::gray));
+           ui->msgBrowser->append(username+"已上线");
+           //更改在线人数条目
+           ui->userNumLbl->setText(QString("在线人数:%1").arg(ui->tableWidget->rowCount()));
+           //调用sendMsg 用户进入的信息
+           sendMsg(UserEnter);
+       }
+}
+```
+
+
+
+**userLeft**
+
+```cpp
+void Widget::userLeft(QString username, QString time)
+{
+    //还是先判空 存在才能删除列表
+    bool isEmpty=ui->tableWidget->findItems(username,Qt::MatchExactly).isEmpty();
+    if(!isEmpty){
+        //找到是第几行 并删除
+        int row=ui->tableWidget->findItems(username,Qt::MatchExactly).first()->row();
+        ui->tableWidget->removeRow(row);
+        ui->msgBrowser->append(username+"用户于"+time+"离开");
+        ui->userNumLbl->setText(QString("在线人数:%1").arg(ui->tableWidget->rowCount()));
+        //sendMsg(UserLeft);    不能有这一行
+    }
+}
+```
+
+大致和用户进入的代码一致，问题就在于用户离开不能有sendMsg的函数调用，因为用户点击退出之后就相当于断开连接了，如果再次调用的话会导致多次收到重复的信号，所以这么做是不对的。可以看到closeEvent这个函数，这和关闭窗口绑定了的槽函数，这个函数里面已经调用了sendMsg(UserLeft)了，所以在userLeft函数中就没有必要再调用这个函数了
