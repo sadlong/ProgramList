@@ -1,15 +1,16 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QThread>
 #include <QMessageBox>
 #include "sendfile.h"
 #include <QFileDialog>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    qDebug() << "客户端主线程：" << QThread::currentThread();
 
     ui->ip->setText("127.0.0.1");
     ui->port->setText("8899");
@@ -17,16 +18,16 @@ MainWindow::MainWindow(QWidget *parent)
     ui->progressBar->setValue(0);   //设置初始化进度条为0
 
     //创建线程对象
-    QThread* t = new QThread;   //这里不能设置父对象
+    QThread* t = new QThread; //这里不能设置父对象
 
-    //创建任务对象
-    SendFile* worker = new SendFile;
+    //创建工作对象
+    SendFile* worker = new SendFile; //这里不能设置父对象
 
     worker->moveToThread(t);
 
     connect(this, &MainWindow::sendFile, worker, &SendFile::sendFile);
 
-    //接收信号的对象在哪个线程上 那么对应的槽函数就在哪个函数上执行
+    //接收信号的对象在哪个线程上 那么对应的槽函数就在哪个线程上执行
     connect(this, &MainWindow::startConnect, worker, &SendFile::connectServer);
 
     //处理主线程发送的信号
@@ -43,6 +44,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(worker, &SendFile::curPercent, ui->progressBar, &QProgressBar::setValue);
 
     t->start();
+
+
 }
 
 MainWindow::~MainWindow()

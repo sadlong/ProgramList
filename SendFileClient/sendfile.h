@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QTcpSocket>   //需要在.pro文件下添加network
+#include <QThread>
 
 class SendFile : public QObject
 {
