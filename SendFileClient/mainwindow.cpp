@@ -45,7 +45,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     t->start();
 
-
 }
 
 MainWindow::~MainWindow()

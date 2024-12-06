@@ -36,7 +36,7 @@ void SendFile::sendFile(QString path)
 
         static int num = 0;
         if(num == 0) {
-            m_tcp->write((char*)&fileSize, 4);
+            m_tcp->write((char*)&fileSize, 4);  //需和接收端的read的第二个参数一致 都应该是4
         }
 
         QByteArray line = file.readLine();
