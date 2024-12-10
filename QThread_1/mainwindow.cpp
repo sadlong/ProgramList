@@ -40,6 +40,20 @@ MainWindow::MainWindow(QWidget *parent)
             ui->quickList->addItem(QString::number(list[i]));
         }
     });
+
+    connect(this, &MainWindow::destroyed, this, [=]() {
+        gen->quit();
+        gen->wait();
+        gen->deleteLater();
+
+        bubble->quit();
+        bubble->wait();
+        bubble->deleteLater();
+
+        quick->quit();
+        quick->wait();
+        quick->deleteLater();
+    });
 }
 
 MainWindow::~MainWindow()
