@@ -27,17 +27,17 @@ MainWindow::MainWindow(QWidget *parent)
         bubble->start();
         quick->start();
         for(int i = 0; i < list.size(); i++) {
-            ui->randList->addItem(QString::number(list.at(i)));
+            ui->randList->addItem(QString::number(list[i]));
         }
     });
     connect(bubble, &BubbleSort::finish, this, [=](QVector<int> list) {
         for(int i = 0; i < list.size(); i++) {
-            ui->bubulList->addItem(QString::number(list.at(i)));
+            ui->bubulList->addItem(QString::number(list[i]));
         }
     });
     connect(quick, &QuickSort::finish, this, [=](QVector<int> list) {
         for(int i = 0; i < list.size(); i++) {
-            ui->quickList->addItem(QString::number(list.at(i)));
+            ui->quickList->addItem(QString::number(list[i]));
         }
     });
 }
@@ -47,3 +47,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+//这样写转到槽不合适，因为gen对象是死在Mainwindow的构造函数中实例化的 是一个局部变量，在这里使用不了gen对象
+//void MainWindow::on_start_clicked()
+//{
+//    emit starting(10000);  //执行10次
+//    gen->start();
+//}

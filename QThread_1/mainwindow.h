@@ -18,6 +18,9 @@ public:
 signals:
     void starting(int num);
 
+//private slots:
+//    void on_start_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
