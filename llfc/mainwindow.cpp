@@ -18,14 +18,14 @@ MainWindow::~MainWindow()
 {
     delete ui;
 
-    if(_login) {
-        delete _login;
-        _login = nullptr;
-    }
-    if(_register) {
-        delete _register;
-        _register = nullptr;
-    }
+//    if(_login) {
+//        delete _login;
+//        _login = nullptr;
+//    }
+//    if(_register) {
+//        delete _register;
+//        _register = nullptr;
+//    }
 }
 
 void MainWindow::SlotSwichReg()

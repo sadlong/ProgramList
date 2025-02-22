@@ -37,6 +37,22 @@
           </spacer>
          </item>
          <item>
+          <widget class="QWidget" name="widget" native="true">
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QLabel" name="err_tip">
+              <property name="text">
+               <string>错误提示</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
             <widget class="QLabel" name="user_label">
@@ -156,7 +172,7 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
-            <widget class="QLabel" name="label_2">
+            <widget class="QLabel" name="confirm_label">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -175,7 +191,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_2">
+            <widget class="QLineEdit" name="confirm_lineEdit">
              <property name="minimumSize">
               <size>
                <width>0</width>
