@@ -15,7 +15,7 @@ RegisterDialog::RegisterDialog(QWidget *parent) :
 
     ui->err_tip->setProperty("state", "normal");   //设置ui的属性
     repolish(ui->err_tip);  //修改颜色
-    connect(HttpMgr::GetInstance().get(), &HttpMgr::sig_http_finish, this, &RegisterDialog::slot_reg_mod_finish);
+    connect(HttpMgr::GetInstance().get(), &HttpMgr::sig_reg_mod_finish, this, &RegisterDialog::slot_reg_mod_finish);
 
     initHttpHandles();
 
@@ -38,6 +38,10 @@ void RegisterDialog::on_get_code_clicked()
     bool match = regex.match(email).hasMatch();
     if(match) {
         //发送http验证码
+        QJsonObject json_obj;
+        json_obj["email"] = email;
+        qDebug() << "gate_url_prefix is " << gate_url_prefix;
+        HttpMgr::GetInstance()->PostHttpReq(QUrl(gate_url_prefix+"/get_verifycode"), json_obj, ReqId::ID_GET_VARIFY_CODE, Modules::REGISTERMOD);
     } else {
         //这里输入中文有问题 在第一节课的时候提到过 可能是编译器处理的不同 用MINGW可能没问题
         showTip(tr("email input error"), false);

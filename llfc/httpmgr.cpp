@@ -7,7 +7,7 @@ HttpMgr::~HttpMgr()
 
 HttpMgr::HttpMgr()
 {
-    connect(this, &HttpMgr::sig_http_finish, this, &HttpMgr::slot_http_finish);
+    connect(this, &HttpMgr::sig_http_finish, this, &HttpMgr::sig_reg_mod_finish);
 }
 
 void HttpMgr::PostHttpReq(QUrl url, QJsonObject json, ReqId req_id, Modules mod)
@@ -18,6 +18,7 @@ void HttpMgr::PostHttpReq(QUrl url, QJsonObject json, ReqId req_id, Modules mod)
     request.setHeader(QNetworkRequest::ContentLengthHeader, QByteArray::number(data.length()));
     auto self = shared_from_this();
     QNetworkReply* reply = m_manager.post(request, data);
+    qDebug() << url;
     connect(reply, &QNetworkReply::finished, [self, reply, req_id, mod]() {
         //处理错误情况
         if(reply->error() != QNetworkReply::NoError) {
@@ -27,6 +28,7 @@ void HttpMgr::PostHttpReq(QUrl url, QJsonObject json, ReqId req_id, Modules mod)
             reply->deleteLater();
             return;
         }
+
 
         //无错误
         QString res = reply->readAll();
