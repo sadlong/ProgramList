@@ -19,6 +19,7 @@ public:
 
 public slots:
     void SlotSwichReg();
+    void SlotSwichLogin();
 
 private:
     Ui::MainWindow *ui;
