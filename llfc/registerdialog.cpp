@@ -325,3 +325,9 @@ void RegisterDialog::on_return_btn_clicked()
     _countdown_timer->stop();
     emit sigSwichLogin();
 }
+
+void RegisterDialog::on_cancel_pushButton_clicked()
+{
+    qDebug() << "return to login";
+    emit sigSwichLogin();
+}

@@ -22,7 +22,7 @@ void HttpMgr::PostHttpReq(QUrl url, QJsonObject json, ReqId req_id, Modules mod)
     connect(reply, &QNetworkReply::finished, [self, reply, req_id, mod]() {
         //处理错误情况
         if(reply->error() != QNetworkReply::NoError) {
-            qDebug() << reply->errorString();
+            qDebug() << reply->errorString() << "hhhhhhhhhhhh";
             //发送信号通知完成
             emit self->sig_http_finish(req_id, "", ErrorCodes::ERR_NETWORK, mod);
             reply->deleteLater();
@@ -44,5 +44,10 @@ void HttpMgr::slot_http_finish(ReqId id, QString res, ErrorCodes err, Modules mo
     if(mod == Modules::REGISTERMOD) {
         //发送信号通知指定模块http的响应结束了
         emit sig_http_finish(id, res, err, mod);
+    }
+
+    if(mod == Modules::RESETMOD){
+        //发送信号通知指定模块http响应结束
+        emit sig_reset_mod_finish(id, res, err);
     }
 }

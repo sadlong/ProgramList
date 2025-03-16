@@ -1,7 +1,7 @@
 #include "clickedlabel.h"
 
 ClickedLabel::ClickedLabel(QWidget* parent) : QLabel(parent), _curstate(ClickLbState::Normal){
-
+    this->setCursor(Qt::PointingHandCursor);    //设置小手光标
 }
 
 void ClickedLabel::enterEvent(QEvent *event)

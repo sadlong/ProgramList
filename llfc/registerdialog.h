@@ -24,6 +24,8 @@ private slots:
 
     void on_return_btn_clicked();
 
+    void on_cancel_pushButton_clicked();
+
 private:
     void initHttpHandles();
     void showTip(QString str, bool ok);
