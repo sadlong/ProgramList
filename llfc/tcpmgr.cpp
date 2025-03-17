@@ -1,4 +1,5 @@
 #include "tcpmgr.h"
+#include "usermgr.h"
 
 TcpMgr::TcpMgr():_host(""),_port(0),_b_recv_pending(false),_message_id(0),_message_len(0)
 {
@@ -102,6 +103,7 @@ TcpMgr::~TcpMgr(){
 }
 void TcpMgr::initHandlers()
 {
+    //处理服务器的回包
     //auto self = shared_from_this();
     _handlers.insert(ID_CHAT_LOGIN_RSP, [this](ReqId id, int len, QByteArray data){
         Q_UNUSED(len);
@@ -149,6 +151,12 @@ void TcpMgr::initHandlers()
 //        if (jsonObj.contains("friend_list")) {
 //            UserMgr::GetInstance()->AppendFriendList(jsonObj["friend_list"].toArray());
 //        }
+
+        UserMgr::GetInstance()->SetUid(jsonObj["uid"].toInt());
+        UserMgr::GetInstance()->SetName(jsonObj["email"].toString());
+//        UserMgr::GetInstance()->SetName(jsonObj["user"].toString());
+        UserMgr::GetInstance()->SetToken(jsonObj["token"].toString());
+//        UserMgr::GetInstance()->SetToken(jsonObj["port"].toString());
 
         emit sig_swich_chatdlg();
     });

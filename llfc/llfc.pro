@@ -12,30 +12,52 @@ RC_ICONS = icon.ico
 DESTDIR = ./bin
 
 SOURCES += \
+    chatdialog.cpp \
+    chatpage.cpp \
+    chatuserlist.cpp \
+    chatuserwid.cpp \
+    clickedbtn.cpp \
     clickedlabel.cpp \
+    customizeedit.cpp \
     global.cpp \
     httpmgr.cpp \
+    listitembase.cpp \
+    loadingdlg.cpp \
     logindialog.cpp \
     main.cpp \
     mainwindow.cpp \
     registerdialog.cpp \
     resetdialog.cpp \
     tcpmgr.cpp \
-    timerbtn.cpp
+    timerbtn.cpp \
+    usermgr.cpp
 
 HEADERS += \
+    chatdialog.h \
+    chatpage.h \
+    chatuserlist.h \
+    chatuserwid.h \
+    clickedbtn.h \
     clickedlabel.h \
+    customizeedit.h \
     global.h \
     httpmgr.h \
+    listitembase.h \
+    loadingdlg.h \
     logindialog.h \
     mainwindow.h \
     registerdialog.h \
     resetdialog.h \
     singleton.h \
     tcpmgr.h \
-    timerbtn.h
+    timerbtn.h \
+    usermgr.h
 
 FORMS += \
+    chatdialog.ui \
+    chatpage.ui \
+    chatuserwid.ui \
+    loadingdlg.ui \
     logindialog.ui \
     mainwindow.ui \
     registerdialog.ui \

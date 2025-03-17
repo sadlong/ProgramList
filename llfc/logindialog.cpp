@@ -27,12 +27,11 @@ LoginDialog::LoginDialog(QWidget *parent) :
 }
 
 
-
 void LoginDialog::slot_tcp_con_finish(bool bsuccess)
 {
 
    if(bsuccess){
-      showTip(tr("聊天服务连接成功，正在登录..."),true);
+      showTip(tr("聊天服务连接成功, 正在登录..."),true);
       QJsonObject jsonObj;
       jsonObj["uid"] = _uid;
       jsonObj["token"] = _token;
@@ -81,8 +80,9 @@ void LoginDialog::on_login_pushButton_clicked()
     auto pwd = ui->pass_lineEdit->text();
     //发送http请求登录
     QJsonObject json_obj;
-    json_obj["user"] = user;
+    json_obj["email"] = user;
     json_obj["passwd"] = xorString(pwd);
+//    json_obj["port"] = "8090";
     HttpMgr::GetInstance()->PostHttpReq(QUrl(gate_url_prefix+"/user_login"), json_obj, ReqId::ID_LOGIN_USER,Modules::LOGINMOD);
 }
 
@@ -187,7 +187,7 @@ void LoginDialog::initHttpHandlers() {
             enableBtn(true);
             return;
         }
-        showTip(tr("登录成功"), true);
+//        showTip(tr("登录成功"), true);
         auto email = jsonObj["email"].toString();
 
         //发送信号通知tcpMgr发送长链接
