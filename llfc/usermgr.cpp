@@ -22,3 +22,19 @@ void UserMgr::SetPort(QString port)
 UserMgr::UserMgr()
 {
 }
+
+int UserMgr::GetUid()
+{
+    //return _user_info->_uid;
+    return _uid;
+}
+
+QString UserMgr::GetName()
+{
+    //return _user_info->_name;
+    return _name;
+}
+
+std::vector<std::shared_ptr<ApplyInfo>> UserMgr::GetApplyList() {
+    return _apply_list;
+}

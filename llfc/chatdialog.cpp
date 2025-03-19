@@ -9,7 +9,7 @@ ChatDialog::ChatDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->add_btn->SetState("normal","hover","press");
-//    ui->add_btn->setProperty("state","normal");
+    ui->add_btn->setProperty("state","normal");
     ui->search_edit->SetMaxLength(15);
     QAction *searchAction = new QAction(ui->search_edit);
     searchAction->setIcon(QIcon(":/res/search.png"));
@@ -52,7 +52,7 @@ ChatDialog::ChatDialog(QWidget *parent) :
     QPixmap scaledPixmap = pixmap.scaled(ui->side_head_lb->size(), Qt::KeepAspectRatio);
     ui->side_head_lb->setPixmap(scaledPixmap);
     ui->side_head_lb->setScaledContents(true);
-    ui->side_chat_lb->setProperty("state", "normal");
+    //ui->side_chat_lb->setProperty("state", "normal");
     ui->side_chat_lb->SetState("normal", "hover", "pressed", "selected_normal", "selected_hover", "selected_pressed");
     ui->side_contact_lb->SetState("normal", "hover", "pressed", "selected_normal", "selected_hover", "selected_pressed");
     connect(ui->side_chat_lb, &StateWidget::clicked, this, &ChatDialog::slot_side_chat);
@@ -83,42 +83,20 @@ void ChatDialog::ShowSearch(bool bsearch)
         ui->con_user_list->hide();
         ui->search_list->hide();
         _mode = ChatUIMode::ChatMode;
-//        ui->search_list->CloseFindDlg();
-//        ui->search_edit->clear();
-//        ui->search_edit->clearFocus();
+        ui->search_list->CloseFindDlg();
+        ui->search_edit->clear();
+        ui->search_edit->clearFocus();
     }else if(_state == ChatUIMode::ContactMode){
         ui->chat_user_list->hide();
         ui->search_list->hide();
         ui->con_user_list->show();
         _mode = ChatUIMode::ContactMode;
-//        ui->search_list->CloseFindDlg();
-//        ui->search_edit->clear();
-//        ui->search_edit->clearFocus();
+        ui->search_list->CloseFindDlg();
+        ui->search_edit->clear();
+        ui->search_edit->clearFocus();
     }
 }
 
-std::vector<QString>  strs ={"hello world !",
-                             "nice to meet u",
-                             "New year，new life",
-                            "You have to love yourself",
-                            "My love is written in the wind ever since the whole world is you"};
-std::vector<QString> heads = {
-    ":/res/head_1.jpg",
-    ":/res/head_2.jpg",
-    ":/res/head_3.jpg",
-    ":/res/head_4.jpg",
-    ":/res/head_5.jpg"
-};
-std::vector<QString> names = {
-    "llfc",
-    "zack",
-    "golang",
-    "cpp",
-    "java",
-    "nodejs",
-    "python",
-    "rust"
-};
 
 void ChatDialog::addChatUserList() {
     // 创建QListWidgetItem，并设置自定义的widget
@@ -204,16 +182,17 @@ void ChatDialog::slot_side_chat() {
     ShowSearch(false);
 }
 
-void ChatDialog::slot_side_contact() {
+void ChatDialog::slot_side_contact(){
     qDebug()<< "receive side contact clicked";
     ClearLabelState(ui->side_contact_lb);
     //设置
-    if(_last_widget == nullptr){
-        ui->stackedWidget->setCurrentWidget(ui->friend_apply_page);
-        _last_widget = ui->friend_apply_page;
-    }else{
-        ui->stackedWidget->setCurrentWidget(_last_widget);
-    }
+    ui->stackedWidget->setCurrentWidget(ui->friend_apply_page);
+//    if(_last_widget == nullptr){
+//        ui->stackedWidget->setCurrentWidget(ui->friend_apply_page);
+//        _last_widget = ui->friend_apply_page;
+//    }else{
+//        ui->stackedWidget->setCurrentWidget(_last_widget);
+//    }
 
     _state = ChatUIMode::ContactMode;
     ShowSearch(false);
